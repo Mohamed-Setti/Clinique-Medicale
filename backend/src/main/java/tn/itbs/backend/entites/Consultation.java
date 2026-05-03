@@ -20,7 +20,9 @@ public class Consultation {
     private RendezVous rendezVous;
     @Column(nullable = false)
     private String diagnostic;
+    @Column(nullable = false)
     private String ordonnance;
+    @Column(nullable = false)
     private Float prix;
 	
 }

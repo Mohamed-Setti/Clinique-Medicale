@@ -21,7 +21,9 @@ public class Medecin {
 
 	@Column(nullable = false)
 	private String nom ;
+	@Column(nullable = false)
 	private String specialite ;
+	@Column(nullable = false)
 	private Boolean disponibilite ; 
 
 	@OneToMany (mappedBy = "M")

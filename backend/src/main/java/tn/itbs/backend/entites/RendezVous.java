@@ -26,8 +26,11 @@ public class RendezVous {
 	
 	@Column(nullable = false)
 	private Date date ;
+	@Column(nullable = false)
 	private Time heure ;
+	@Column(nullable = false)
 	private String motif ; 
+	@Column(nullable = false)
 	private String statue ;
 	
 	

@@ -22,7 +22,10 @@ public class Patient {
 
 	@Column(nullable = false)
 	private String nom ;
+	@Column(nullable = false)
 	private Date dateDeNaissance ;
+	@Column(nullable = false,unique = true)
+	private String numTel;
 	
 	@OneToMany (mappedBy = "P")
 	private List<RendezVous> listP = new ArrayList<RendezVous>() ;
