@@ -15,13 +15,23 @@ import java.sql.Time;
 
 @Repository
 public interface RendezVousRepository extends JpaRepository<RendezVous, Integer>{
-	List<RendezVous> findByM(Medecin m);
 	
-	List<RendezVous> findByP(Patient p);
 	
 	List<RendezVous> findByDate(Date date);
 	
 	List<RendezVous> findByHeure(Time heure);
 	
 	List<RendezVous> findByStatue(String statue);
+		
+	RendezVous findByMAndDateAndHeure(Medecin m, Date date, Time heure);
+	
+	List<RendezVous> findByP(Patient p);
+	
+	RendezVous findByDateAndHeure(Date date, Time heure);
+	
+	List<RendezVous> findByDateBetween(Date dateDebut,Date dateFin);
+	List<RendezVous> findByMAndDateBetween(Medecin m, Date dateDebut,Date dateFin);
+	
+	List<RendezVous> findByPAndDateBetween(Patient p, Date dateDebut,Date dateFin);
+
 }

@@ -11,6 +11,7 @@ import java.sql.Date;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Integer>{
 	
+	
 	List<Patient> findByDateDeNaissance(Date dateDeNaissance);
 	
 	List<Patient> findByNom(String nom);
