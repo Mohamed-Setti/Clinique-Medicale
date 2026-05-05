@@ -17,6 +17,10 @@ public class PatientService {
 	@Autowired
 	private PatientRepository pr ;
 	
+	public List<Patient> getAll () {
+		return pr.findAll();
+	}
+	
 	public Patient trouverPatientparNumTel (String numTel) {
 		return pr.findByNumTel(numTel);
 	}

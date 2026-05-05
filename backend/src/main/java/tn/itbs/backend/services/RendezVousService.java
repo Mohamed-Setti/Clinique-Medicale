@@ -20,6 +20,10 @@ public class RendezVousService {
 	@Autowired
 	private RendezVousRepository rvr;
 	
+	public List<RendezVous> getAll(){
+		return rvr.findAll();
+	}
+	
 	public List<RendezVous> trouverRondezVousparDate(Date date){
 		return rvr.findByDate(date);
 	}
@@ -56,11 +60,11 @@ public class RendezVousService {
 		rvr.save(rv);
 	}
 	
-	public void supprimerPatient(int idrendezVous) {
+	public void supprimerRendezVous(int idrendezVous) {
 		rvr.deleteById(idrendezVous);
 	}
 	
-	public ResponseEntity<String> miseajourPatient (int idRendezVous, RendezVous RV) {
+	public ResponseEntity<String> miseajourRendezVous (int idRendezVous, RendezVous RV) {
 		rvr.findById(idRendezVous).ifPresentOrElse(
 				rv->{
 					rv.setIdRendezVous(RV.getIdRendezVous());

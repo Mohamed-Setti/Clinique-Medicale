@@ -3,7 +3,10 @@ package tn.itbs.backend.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import tn.itbs.backend.entites.Medecin;
 import tn.itbs.backend.repository.MedecinRepository;
@@ -13,6 +16,9 @@ public class MedecinService {
 	@Autowired
 	private MedecinRepository mr ;
 	
+	public List<Medecin> getAll(){
+		return mr.findAll();
+	}
 	public List<Medecin> trouverMedcinparSpecalite(String specialite){
 		return mr.findBySpecialite(specialite);
 	}
@@ -27,5 +33,20 @@ public class MedecinService {
 	
 	public void supprimerMedecin(int idMedecin) {
 		mr.deleteById(idMedecin);
+	}
+	
+	public ResponseEntity<String> miseajourMedecin (int idMedecin, Medecin M ) {
+		mr.findById(idMedecin).ifPresentOrElse(
+				m->{
+					m.setIdMedecin(M.getIdMedecin());
+					m.setNom(M.getNom());
+					m.setSpecialite(M.getSpecialite());
+					m.setDisponibilite(M.getDisponibilite());
+				}
+				, 
+				()-> {
+					throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Medecin non trouvé");
+				});
+		return ResponseEntity.ok("Medecin mis à jour avec succès");
 	}
 }
