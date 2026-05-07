@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import tn.itbs.backend.Dto.PatientDTO;
 import tn.itbs.backend.entites.Patient;
 import tn.itbs.backend.services.PatientService;
 
