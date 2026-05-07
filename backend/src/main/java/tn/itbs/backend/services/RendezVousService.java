@@ -41,15 +41,15 @@ public class RendezVousService {
 	}
 	
 	public List<RendezVous> trouverRendezVousparMedecinetDateentre(Medecin m, Date dateDebut, Date dateFin) {
-		return rvr.findByMAndDateBetween(m,dateDebut,dateFin);
+		return rvr.findByMedecinAndDateBetween(m,dateDebut,dateFin);
 	}
 	
 	public List<RendezVous> trouverRendezVousparPatientetDateetHeure(Patient p, Date dateDebut, Date dateFin) {
-		return rvr.findByPAndDateBetween(p,dateDebut,dateFin);
+		return rvr.findByPatientAndDateBetween(p,dateDebut,dateFin);
 	}
 	
 	public RendezVous trouverRendezVousparMedecinetDateetHeure(Medecin m, Date date, Time heure) {
-		return rvr.findByMAndDateAndHeure(m,date, heure);
+		return rvr.findByMedecinAndDateAndHeure(m,date, heure);
 	}
 		
 	public List<RendezVous> trouverRondezVousparStatue(String statue){
@@ -72,8 +72,8 @@ public class RendezVousService {
 					rv.setHeure(RV.getHeure());
 					rv.setMotif(RV.getMotif());
 					rv.setStatue(RV.getStatue());
-					rv.setM(RV.getM());
-					rv.setP(RV.getP());
+					rv.setMedecin(RV.getMedecin());
+					rv.setPatient(RV.getPatient());
 				}
 				, 
 				()-> {

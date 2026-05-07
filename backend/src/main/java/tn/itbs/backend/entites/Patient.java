@@ -16,22 +16,23 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-
 @NoArgsConstructor
 @AllArgsConstructor
 public class Patient {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idPatient ;
 
-	@Column(nullable = false)
-	private String nom ;
-	@Column(nullable = false)
-	private Date dateDeNaissance ;
-	@Column(nullable = false,unique = true)
-	private String numTel;
-	
-	@OneToMany (mappedBy = "P")
-	private List<RendezVous> listP = new ArrayList<RendezVous>() ;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idPatient;
+
+    @Column(nullable = false)
+    private String nom;
+
+    @Column(nullable = false)
+    private Date dateDeNaissance;
+
+    @Column(nullable = false, unique = true)
+    private String numTel;
+
+    @OneToMany(mappedBy = "patient")
+    private List<RendezVous> listP = new ArrayList<>();
 }

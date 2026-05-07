@@ -23,15 +23,15 @@ public interface RendezVousRepository extends JpaRepository<RendezVous, Integer>
 	
 	List<RendezVous> findByStatue(String statue);
 		
-	RendezVous findByMAndDateAndHeure(Medecin m, Date date, Time heure);
+	RendezVous findByMedecinAndDateAndHeure(Medecin m, Date date, Time heure);
 	
-	List<RendezVous> findByP(Patient p);
+	List<RendezVous> findByPatient(Patient p);
 	
 	RendezVous findByDateAndHeure(Date date, Time heure);
 	
 	List<RendezVous> findByDateBetween(Date dateDebut,Date dateFin);
-	List<RendezVous> findByMAndDateBetween(Medecin m, Date dateDebut,Date dateFin);
+	List<RendezVous> findByMedecinAndDateBetween(Medecin m, Date dateDebut,Date dateFin);
 	
-	List<RendezVous> findByPAndDateBetween(Patient p, Date dateDebut,Date dateFin);
+	List<RendezVous> findByPatientAndDateBetween(Patient p, Date dateDebut,Date dateFin);
 
 }
