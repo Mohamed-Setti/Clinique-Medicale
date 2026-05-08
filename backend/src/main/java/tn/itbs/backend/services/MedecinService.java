@@ -27,7 +27,14 @@ public class MedecinService {
 		return mr.findByDisponibilite(disponibilite);
 	}
 	
-	public void ajouterMedecin(Medecin m) {
+	public void ajouterMedecin(Medecin mDto) {
+		System.out.println(mDto.toString());
+		
+		Medecin m = new Medecin() ;
+		m.setNom(mDto.getNom());
+		m.setSpecialite(mDto.getSpecialite());
+		m.setDisponibilite(mDto.getDisponibilite());
+	
 		mr.save(m);
 	}
 	
@@ -38,7 +45,6 @@ public class MedecinService {
 	public ResponseEntity<String> miseajourMedecin (int idMedecin, Medecin M ) {
 		mr.findById(idMedecin).ifPresentOrElse(
 				m->{
-					m.setIdMedecin(M.getIdMedecin());
 					m.setNom(M.getNom());
 					m.setSpecialite(M.getSpecialite());
 					m.setDisponibilite(M.getDisponibilite());

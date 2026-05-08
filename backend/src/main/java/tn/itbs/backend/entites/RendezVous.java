@@ -1,12 +1,15 @@
 package tn.itbs.backend.entites;
 
-import java.sql.Date;
-import java.sql.Time;
+
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tn.itbs.backend.enums.RendezVousStatut;
 
 @Entity
 @Data
@@ -31,14 +34,14 @@ public class RendezVous {
     private Consultation consultation;
 
     @Column(nullable = false)
-    private Date date;
+    private LocalDate date;
 
     @Column(nullable = false)
-    private Time heure;
+    private LocalTime heure;
 
     @Column(nullable = false)
     private String motif;
 
     @Column(nullable = false)
-    private String statue;
+    private RendezVousStatut statue;
 }

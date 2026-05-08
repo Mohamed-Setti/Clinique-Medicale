@@ -15,14 +15,20 @@ import tn.itbs.backend.entites.RendezVous;
 public class RendezVousMapper {
 	@Autowired
 	private ModelMapper mmaper;
+
 	
 	public RendezVousDTO toDTO (RendezVous rv) {
 		RendezVousDTO rvDto = mmaper.map(rv, RendezVousDTO.class);
+		
+		rvDto.setIdMedecin(rv.getMedecin().getIdMedecin());
+		rvDto.setIdPatient(rv.getPatient().getIdPatient());
+		
 		return rvDto;
 	}
 	
 	public RendezVous fromDTO (RendezVousDTO rvDto) {
 		RendezVous rv = mmaper.map(rvDto, RendezVous.class);
+		
 		return rv;
 	}
 	

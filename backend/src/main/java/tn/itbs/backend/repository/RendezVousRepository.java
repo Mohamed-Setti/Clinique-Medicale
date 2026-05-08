@@ -7,8 +7,8 @@ import tn.itbs.backend.entites.Medecin;
 import tn.itbs.backend.entites.Patient;
 import tn.itbs.backend.entites.RendezVous;
 import java.util.List;
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 
@@ -17,21 +17,21 @@ import java.sql.Time;
 public interface RendezVousRepository extends JpaRepository<RendezVous, Integer>{
 	
 	
-	List<RendezVous> findByDate(Date date);
+	List<RendezVous> findByDate(LocalDate date);
 	
-	List<RendezVous> findByHeure(Time heure);
+	List<RendezVous> findByHeure(LocalTime heure);
 	
 	List<RendezVous> findByStatue(String statue);
 		
-	RendezVous findByMedecinAndDateAndHeure(Medecin m, Date date, Time heure);
+	RendezVous findByMedecinAndDateAndHeure(Medecin m, LocalDate date, LocalTime heure);
 	
 	List<RendezVous> findByPatient(Patient p);
 	
-	RendezVous findByDateAndHeure(Date date, Time heure);
+	RendezVous findByDateAndHeure(LocalDate date, LocalTime heure);
 	
-	List<RendezVous> findByDateBetween(Date dateDebut,Date dateFin);
-	List<RendezVous> findByMedecinAndDateBetween(Medecin m, Date dateDebut,Date dateFin);
+	List<RendezVous> findByDateBetween(LocalDate dateDebut,LocalDate dateFin);
+	List<RendezVous> findByMedecinAndDateBetween(Medecin m, LocalDate dateDebut,LocalDate dateFin);
 	
-	List<RendezVous> findByPatientAndDateBetween(Patient p, Date dateDebut,Date dateFin);
+	List<RendezVous> findByPatientAndDateBetween(Patient p, LocalDate dateDebut,LocalDate dateFin);
 
 }

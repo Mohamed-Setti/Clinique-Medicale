@@ -1,6 +1,7 @@
 package tn.itbs.backend.entites;
 
-import java.sql.Date;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Patient {
     private String nom;
 
     @Column(nullable = false)
-    private Date dateDeNaissance;
+    private LocalDate dateDeNaissance;
 
     @Column(nullable = false, unique = true)
     private String numTel;

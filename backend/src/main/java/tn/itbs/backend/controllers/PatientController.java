@@ -3,11 +3,12 @@ package tn.itbs.backend.controllers;
 import java.sql.Date;
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import tn.itbs.backend.Dto.PatientDTO;
-import tn.itbs.backend.entites.Patient;
+import tn.itbs.backend.Mapper.PatientMapper;
 import tn.itbs.backend.services.PatientService;
 
 @RestController
@@ -15,19 +16,20 @@ import tn.itbs.backend.services.PatientService;
 public class PatientController {
 
     @Autowired
-    private PatientService ps;
-
+    private PatientService ps ;
+    @Autowired
+    private PatientMapper pm ;
     // ✅ CREATE
     @PostMapping("/add")
-    public void ajouterPatient(@RequestBody Patient p) {
-        ps.ajouterPatient(p);
+    public void ajouterPatient(@RequestBody PatientDTO p) {
+        ps.ajouterPatient(pm.fromDTO(p));
     }
 
     // ✅ UPDATE
     @PutMapping("/update/{id}")
     public void miseajourPatient(@PathVariable("id") int idPatient,
-                                 @RequestBody Patient p) {
-        ps.miseajourPatient(idPatient, p);
+                                 @RequestBody PatientDTO p) {
+        ps.miseajourPatient(idPatient, pm.fromDTO(p));
     }
 
     // ✅ DELETE
@@ -38,25 +40,25 @@ public class PatientController {
 
     // ✅ GET ALL
     @GetMapping("/all")
-    public List<Patient> getAll() {
-        return ps.getAll();
+    public List<PatientDTO> getAll() {
+        return pm.toDTOList(ps.getAll());
     }
 
     // ✅ SEARCH BY PHONE
     @GetMapping("/numTel/{numTel}")
-    public Patient trouverPatientparNumTel(@PathVariable String numTel) {
-        return ps.trouverPatientparNumTel(numTel);
+    public PatientDTO trouverPatientparNumTel(@PathVariable String numTel) {
+        return pm.toDTO(ps.trouverPatientparNumTel(numTel));
     }
 
     // ✅ SEARCH BY NAME
     @GetMapping("/nom/{nom}")
-    public List<Patient> trouverPatientparNom(@PathVariable String nom) {
-        return ps.trouverPatientparNom(nom);
+    public List<PatientDTO> trouverPatientparNom(@PathVariable String nom) {
+        return pm.toDTOList(ps.trouverPatientparNom(nom));
     }
 
     // ✅ SEARCH BY DATE
     @GetMapping("/date/{datedenaissance}")
-    public List<Patient> trouverPatientparDatedeNaissance(@PathVariable Date datedenaissance) {
-        return ps.trouverPatientparDateDeNaissance(datedenaissance);
+    public List<PatientDTO> trouverPatientparDatedeNaissance(@PathVariable Date datedenaissance) {
+        return pm.toDTOList(ps.trouverPatientparDateDeNaissance(datedenaissance));
     }
 }

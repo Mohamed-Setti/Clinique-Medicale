@@ -1,6 +1,7 @@
 package tn.itbs.backend.Dto;
 
-import java.sql.Date;
+
+import java.time.LocalDate;
 
 import lombok.Data;
 
@@ -9,6 +10,6 @@ public class PatientDTO {
 	
 	private int idPatient ;
 	private String nom ;
-	private Date dateDeNaissance ;
+	private LocalDate dateDeNaissance ;
 	private String numTel;
 }
