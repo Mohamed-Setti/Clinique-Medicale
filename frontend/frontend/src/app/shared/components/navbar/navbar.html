@@ -1,1 +1,16 @@
-<p>navbar works!</p>
+<div class="app-navbar-wrapper">
+    <div class="toggle-sidebar" (click)="onToggleSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="navbar-content">
+        <h1 class="page-title">{{ pageTitle }}</h1>
+        <div class="user-menu">
+            <div class="user-info">
+                <span class="user-name">Med Seif</span>
+                <span class="user-role">Admin</span>
+            </div>
+        </div>
+    </div>
+</div>

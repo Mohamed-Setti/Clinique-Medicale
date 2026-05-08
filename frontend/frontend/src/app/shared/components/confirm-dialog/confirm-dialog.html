@@ -1,1 +1,8 @@
-<p>confirm-dialog works!</p>
+<div class="confirm-dialog">
+    <h2 class="dialog-title">{{ title }}</h2>
+    <p class="dialog-message">{{ message }}</p>
+    <div class="dialog-buttons">
+        <button class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+        <button class="btn btn-danger" (click)="onConfirm()">Confirm</button>
+    </div>
+</div>
