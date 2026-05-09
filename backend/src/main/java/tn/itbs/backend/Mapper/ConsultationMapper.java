@@ -17,6 +17,7 @@ public class ConsultationMapper {
 	
 	public ConsultationDTO toDTO (Consultation c) {
 		ConsultationDTO cDto = mmaper.map(c, ConsultationDTO.class);
+		cDto.setIdRendezVous(c.getRendezVous().getIdRendezVous());
 		return cDto;
 	}
 	

@@ -12,5 +12,6 @@ public class ConsultationDTO {
     private String diagnostic;
     private String ordonnance;
     private Float prix;
+    private int idRendezVous ;
 	
 }

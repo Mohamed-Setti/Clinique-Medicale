@@ -21,6 +21,11 @@ public class PatientService {
 		return pr.findAll();
 	}
 	
+	public Patient trouverPatientparId (int idPatient) {
+		return pr.findById(idPatient)
+	             .orElseThrow(() -> new RuntimeException("Patient not found with id: " + idPatient));
+	}
+	
 	public Patient trouverPatientparNumTel (String numTel) {
 		return pr.findByNumTel(numTel);
 	}
@@ -44,15 +49,16 @@ public class PatientService {
 	public ResponseEntity<String> miseajourPatient (int idPatient, Patient P) {
 		pr.findById(idPatient).ifPresentOrElse(
 				p->{
-					p.setIdPatient(P.getIdPatient());
 					p.setNom(P.getNom());
 					p.setDateDeNaissance(P.getDateDeNaissance());
 					p.setNumTel(P.getNumTel());
+					pr.save(p);
 				}
 				, 
 				()-> {
 					throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient non trouvé");
 				});
+		
 		return ResponseEntity.ok("Patient mis à jour avec succès");
 	}
 }
