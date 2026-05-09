@@ -1,7 +1,9 @@
-<div class="app-wrapper">
-  <app-sidebar></app-sidebar>
-  <app-navbar></app-navbar>
-  <div class="content-wrapper">
-    <router-outlet></router-outlet>
+<div class="app-layout">
+  <app-sidebar />
+  <div class="main-area">
+    <app-navbar />
+    <main class="content">
+      <router-outlet />
+    </main>
   </div>
 </div>

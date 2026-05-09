@@ -1,1 +1,49 @@
-<p>patient-details works!</p>
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Dossier patient</h1>
+    <p class="page-subtitle">Informations détaillées</p>
+  </div>
+  <div style="display:flex;gap:10px">
+    <a routerLink="/patients" class="btn btn-outline">← Retour</a>
+    @if (patient()) {
+    <a [routerLink]="['/patients', patient()!.idPatient, 'edit']" class="btn btn-outline">Modifier</a>
+    <button class="btn btn-danger" (click)="showDeleteConfirm.set(true)">Supprimer</button>
+    }
+  </div>
+</div>
+
+@if (error()) { <div class="alert-error">{{ error() }}</div> }
+@if (loading()) { <div class="loading-state">
+  <div class="spinner"></div><span>Chargement…</span>
+</div> }
+
+@if (patient(); as p) {
+<div class="card detail-card">
+  <div class="patient-header">
+    <div class="avatar-lg">{{ p.nom[0] }}</div>
+    <div>
+      <h2 class="patient-full-name">{{ p.nom }}</h2>
+      <p class="patient-meta">Patient #{{ p.idPatient }} · {{ age(p.dateDeNaissance) }} ans</p>
+    </div>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-item"><span class="detail-label">Date de naissance</span><span class="detail-value">{{
+        p.dateDeNaissance | date:'dd/MM/yyyy' }}</span></div>
+    <div class="detail-item"><span class="detail-label">Téléphone</span><span class="detail-value">{{ p.numTel }}</span>
+    </div>
+  </div>
+</div>
+}
+
+@if (showDeleteConfirm()) {
+<div class="modal-overlay" (click)="showDeleteConfirm.set(false)">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <h3>Supprimer ce patient ?</h3>
+    <p>Cette action est irréversible.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" (click)="showDeleteConfirm.set(false)">Annuler</button>
+      <button class="btn btn-danger" (click)="delete()">Supprimer</button>
+    </div>
+  </div>
+</div>
+}

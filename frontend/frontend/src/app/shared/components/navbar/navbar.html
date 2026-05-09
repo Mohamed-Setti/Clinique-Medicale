@@ -1,16 +1,19 @@
-<div class="app-navbar-wrapper">
-    <div class="toggle-sidebar" (click)="onToggleSidebar()">
-        <span></span>
-        <span></span>
-        <span></span>
+<header class="navbar">
+  <div class="navbar-left">
+    <div class="breadcrumb">
+      <span class="date-display">{{ today | date:'EEEE, d MMMM yyyy' }}</span>
     </div>
-    <div class="navbar-content">
-        <h1 class="page-title">{{ pageTitle }}</h1>
-        <div class="user-menu">
-            <div class="user-info">
-                <span class="user-name">Med Seif</span>
-                <span class="user-role">Admin</span>
-            </div>
-        </div>
+  </div>
+  <div class="navbar-right">
+    <button class="icon-btn" title="Notifications">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      </svg>
+      <span class="notif-dot"></span>
+    </button>
+    <div class="user-avatar" title="Admin">
+      <span>A</span>
     </div>
-</div>
+  </div>
+</header>

@@ -1,3 +1,109 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  color: #1a2540;
+  background: #f5f7fb;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Shared page styles */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0a1628;
+  letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+  font-size: 0.875rem;
+  color: #6b7a99;
+  margin-top: 2px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.18s;
+}
+
+.btn-primary {
+  background: #0f6fba;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #0d5ea0;
+}
+
+.btn-outline {
+  background: white;
+  color: #0f6fba;
+  border: 1px solid #ccdff0;
+}
+
+.btn-outline:hover {
+  background: #f0f6fd;
+}
+
+.btn-danger {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.btn-danger:hover {
+  background: #fecaca;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e8edf4;
+  padding: 24px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-green  { background: #dcfce7; color: #16a34a; }
+.badge-red    { background: #fee2e2; color: #dc2626; }
+.badge-yellow { background: #fef9c3; color: #ca8a04; }
+.badge-gray   { background: #f1f5f9; color: #64748b; }
+.badge-blue   { background: #dbeafe; color: #2563eb; }
