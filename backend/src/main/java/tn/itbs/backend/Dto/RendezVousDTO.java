@@ -17,8 +17,9 @@ public class RendezVousDTO {
 	private LocalDate date ;	
 	private LocalTime heure ;	
 	private String motif ; 
-	private RendezVousStatut statue ;
+	private RendezVousStatut statut ;
 	private int idPatient;
-	private int idMedecin ;
+	private int idMedecin;
+	private int idConsultation; 
 	
 }

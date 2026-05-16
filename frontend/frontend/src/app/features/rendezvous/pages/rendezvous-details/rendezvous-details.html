@@ -1,2 +1,75 @@
-<div class="page-header"><h1 class="page-title">Détails rendez-vous</h1><a routerLink="/rendezvous" class="btn btn-outline">← Retour</a></div>
-<div class="card"><p style="color:#6b7a99;font-size:.875rem">Détails du rendez-vous à implémenter.</p></div>
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Détail du rendez-vous</h1>
+        <p class="page-subtitle">Informations détaillées</p>
+    </div>
+    <div style="display:flex;gap:10px">
+        <a routerLink="/rendezvous/calendar" class="btn btn-outline">← Retour</a>
+        @if (rendezvous()) {
+        <button class="btn btn-danger" (click)="showDeleteConfirm.set(true)">Supprimer</button>
+        }
+    </div>
+</div>
+
+@if (error()) {
+<div class="alert-error">{{ error() }}</div>
+}
+
+@if (loading()) {
+<div class="loading-state">
+    <div class="spinner"></div>
+    <span>Chargement…</span>
+</div>
+}
+
+@if (rendezvous(); as rv) {
+<div class="card detail-card">
+    <div class="rv-header">
+        <div class="avatar-lg">#{{ rv.idRendezVous }}</div>
+        <div>
+            <h2 class="rv-title">Rendez-vous #{{ rv.idRendezVous }}</h2>
+            <p class="rv-meta">{{ rv.date | date:'dd/MM/yyyy' }} à {{ rv.heure }}</p>
+        </div>
+    </div>
+    <div class="detail-grid">
+        <div class="detail-item">
+            <span class="detail-label">Patient</span>
+            <span class="detail-value">{{ patientName() }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Médecin</span>
+            <span class="detail-value">{{ medecinName() }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Date</span>
+            <span class="detail-value">{{ rv.date | date:'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Heure</span>
+            <span class="detail-value">{{ rv.heure }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Statut</span>
+            <span class="detail-value">
+                <span class="badge" [class.badge-success]="rv.statut === 'CONFIRME'"
+                    [class.badge-danger]="rv.statut === 'ANNULE'" [class.badge-warning]="rv.statut === 'EN_ATTENTE'">
+                    {{ rv.statut }}
+                </span>
+            </span>
+        </div>
+    </div>
+</div>
+}
+
+@if (showDeleteConfirm()) {
+<div class="modal-overlay" (click)="showDeleteConfirm.set(false)">
+    <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Supprimer ce rendez-vous ?</h3>
+        <p>Cette action est irréversible.</p>
+        <div class="modal-actions">
+            <button class="btn btn-outline" (click)="showDeleteConfirm.set(false)">Annuler</button>
+            <button class="btn btn-danger" (click)="delete()">Supprimer</button>
+        </div>
+    </div>
+</div>
+}

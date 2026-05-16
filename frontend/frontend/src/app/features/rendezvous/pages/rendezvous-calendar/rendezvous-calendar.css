@@ -1,0 +1,243 @@
+.alert-error {
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    font-size: 0.875rem;
+}
+
+.loading-state {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 40px;
+    justify-content: center;
+    color: #6b7a99;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e2e8f0;
+    border-top-color: #0f6fba;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.cal-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.cal-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cal-nav button {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 18px;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cal-nav button:hover {
+    background: #f8fafc;
+}
+
+.week-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #0a1628;
+    min-width: 200px;
+    text-align: center;
+}
+
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.day-col {
+    background: white;
+    border: 1px solid #e8edf4;
+    border-radius: 10px;
+    min-height: 220px;
+    overflow: hidden;
+}
+
+.today-col {
+    border-color: #0f6fba;
+    border-width: 2px;
+}
+
+.day-head {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #f1f5f9;
+    background: #f8fafc;
+}
+
+.day-name {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #6b7a99;
+    font-weight: 600;
+}
+
+.day-num {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0a1628;
+    margin-top: 2px;
+}
+
+.today-num {
+    background: #0f6fba;
+    color: white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px auto 0;
+    font-size: 0.85rem;
+}
+
+.day-body {
+    padding: 6px;
+}
+
+.empty-day {
+    text-align: center;
+    color: #cbd5e1;
+    font-size: 0.8rem;
+    padding: 12px 0;
+}
+
+.rv-chip {
+    display: block;
+    border-radius: 6px;
+    padding: 5px 7px;
+    margin-bottom: 5px;
+    font-size: 0.75rem;
+    text-decoration: none;
+    background: #e0f0ff;
+    border-left: 3px solid #0f6fba;
+    transition: opacity 0.15s;
+}
+
+.rv-chip:hover {
+    opacity: 0.8;
+}
+
+.rv-time {
+    display: block;
+    font-weight: 700;
+    color: #0a1628;
+}
+
+.rv-patient {
+    display: block;
+    color: #1a2540;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rv-medecin {
+    display: block;
+    color: #6b7a99;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.7rem;
+}
+
+.rv-chip.confirme {
+    background: #dcfce7;
+    border-left-color: #16a34a;
+}
+
+.rv-chip.confirme .rv-time {
+    color: #14532d;
+}
+
+.rv-chip.confirme .rv-patient {
+    color: #166534;
+}
+
+.rv-chip.annule {
+    background: #fee2e2;
+    border-left-color: #dc2626;
+}
+
+.rv-chip.annule .rv-time {
+    color: #7f1d1d;
+}
+
+.rv-chip.annule .rv-patient {
+    color: #991b1b;
+}
+
+.rv-chip.en-attente {
+    background: #fef9c3;
+    border-left-color: #ca8a04;
+}
+
+.rv-chip.en-attente .rv-time {
+    color: #713f12;
+}
+
+.rv-chip.en-attente .rv-patient {
+    color: #92400e;
+}
+
+.legend {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.leg-item {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.leg-item.confirme {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.leg-item.en-attente {
+    background: #fef9c3;
+    color: #92400e;
+}
+
+.leg-item.annule {
+    background: #fee2e2;
+    color: #991b1b;
+}

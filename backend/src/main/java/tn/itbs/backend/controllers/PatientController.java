@@ -42,7 +42,7 @@ public class PatientController {
     }
     
     @GetMapping("/id/{idPatient}")
-    public PatientDTO trouverPatientparNumTel(@PathVariable int idPatient) {
+    public PatientDTO trouverPatientparId(@PathVariable int idPatient) {
         return pm.toDTO(ps.trouverPatientparId(idPatient));
     }
     

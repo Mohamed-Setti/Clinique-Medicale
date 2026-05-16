@@ -1,17 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RendezvousList } from './rendezvous-list';
+import { RendezVousList } from './rendezvous-list';
+import { RendezVousService } from '../../services/rendezvous.service';
 
-describe('RendezvousList', () => {
-  let component: RendezvousList;
-  let fixture: ComponentFixture<RendezvousList>;
+describe('RendezVousList', () => {
+  let component: RendezVousList;
+  let fixture: ComponentFixture<RendezVousList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RendezvousList],
+      imports: [RendezVousList],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(RendezvousList);
+    fixture = TestBed.createComponent(RendezVousList);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

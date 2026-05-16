@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +32,9 @@ public class RendezVousController {
 		rvs.ajouterRendezVous(rvDto);
 	}
 	
-	@PostMapping("/Update/{id}")
+	
+	
+	@PutMapping("/Update/{id}")
 	public ResponseEntity<String> miseajourRendezVous(@PathVariable int idRendezVous,@RequestBody RendezVousDTO rvDto) {
 		return rvs.miseajourRendezVous(idRendezVous,rvDto);
 	}
@@ -41,9 +44,15 @@ public class RendezVousController {
 		rvs.supprimerRendezVous(idRendezVous);
 	}
 	
-	@GetMapping("/getAll")
+	@GetMapping("/All")
 	public List<RendezVousDTO> getAll(){
 		return rvm.toDTOList(rvs.getAll());
+	}
+	
+	
+	@GetMapping("/id/{idRendezVous}")
+	public RendezVousDTO trouverRendezVousparId(@PathVariable int idRendezVous) {
+		return rvm.toDTO(rvs.trouverRendezVousparId(idRendezVous));
 	}
 	
 	@GetMapping("/betweenDates")

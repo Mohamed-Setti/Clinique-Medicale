@@ -1,0 +1,60 @@
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Calendrier</h1>
+        <p class="page-subtitle">Rendez-vous de la semaine</p>
+    </div>
+    <a routerLink="/rendezvous/new" class="btn btn-primary">+ Nouveau rendez-vous</a>
+</div>
+
+@if (error()) {
+<div class="alert-error">{{ error() }}</div>
+}
+
+<div class="cal-toolbar">
+    <div class="cal-nav">
+        <button (click)="prevWeek()">&#8249;</button>
+        <span class="week-label">{{ weekLabel() }}</span>
+        <button (click)="nextWeek()">&#8250;</button>
+    </div>
+    <button class="btn btn-outline" (click)="goToday()">Aujourd'hui</button>
+</div>
+
+@if (loading()) {
+<div class="loading-state">
+    <div class="spinner"></div>
+    <span>Chargement…</span>
+</div>
+} @else {
+<div class="cal-grid">
+    @for (day of weekDays(); track day.toISOString()) {
+    <div class="day-col" [class.today-col]="isToday(day)">
+        <div class="day-head">
+            <div class="day-name">{{ day | date:'EEE':'':'fr' }}</div>
+            <div class="day-num" [class.today-num]="isToday(day)">
+                {{ day | date:'d' }}
+            </div>
+        </div>
+        <div class="day-body">
+            @if (getRvForDay(day).length === 0) {
+            <div class="empty-day">—</div>
+            }
+            @for (rv of getRvForDay(day); track rv.idRendezVous) {
+            <a [routerLink]="['/rendezvous', rv.idRendezVous]" class="rv-chip"
+                [class.confirme]="rv.statut === 'CONFIRME'" [class.annule]="rv.statut === 'ANNULE'"
+                [class.en-attente]="rv.statut === 'EN_ATTENTE'">
+                <span class="rv-time">{{ rv.heure }}</span>
+                <span class="rv-patient">{{ getPatientName(rv.idPatient) }}</span>
+                <span class="rv-medecin">Dr. {{ getMedecinName(rv.idMedecin) }}</span>
+            </a>
+            }
+        </div>
+    </div>
+    }
+</div>
+
+<div class="legend">
+    <span class="leg-item confirme">Confirmé</span>
+    <span class="leg-item en-attente">En attente</span>
+    <span class="leg-item annule">Annulé</span>
+</div>
+}

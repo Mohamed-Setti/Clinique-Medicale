@@ -38,6 +38,11 @@ public class MedecinController {
     public List<MedecinDTO> getAll() {
         return mm.toDTOList(ms.getAll());
     }
+    
+    @GetMapping("/id/{idMedecin}")
+    public MedecinDTO trouverMedecinparNumTel(@PathVariable int idMedecin) {
+        return mm.toDTO(ms.trouverMedecinparId(idMedecin));
+    }
 
     @GetMapping("/Specialite/{specialite}")   
     public List<MedecinDTO> trouverMedecinparSpecialite(@PathVariable String specialite) {
@@ -45,7 +50,7 @@ public class MedecinController {
     }
 
     @GetMapping("/Disponibilite/{disponibilite}") 
-    public List<MedecinDTO> trouverMedecinparDisponibilite(@PathVariable Boolean disponibilite) {
-        return mm.toDTOList(ms.trouverMedcinparDisponibilite(disponibilite));
+    public List<MedecinDTO> trouverMedecinparDisponibilite() {
+        return mm.toDTOList(ms.trouverMedcinparDisponibilite());
     }
 }

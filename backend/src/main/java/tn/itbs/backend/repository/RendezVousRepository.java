@@ -21,11 +21,13 @@ public interface RendezVousRepository extends JpaRepository<RendezVous, Integer>
 	
 	List<RendezVous> findByHeure(LocalTime heure);
 	
-	List<RendezVous> findByStatue(String statue);
+	List<RendezVous> findByStatut(String statue);
 		
 	RendezVous findByMedecinAndDateAndHeure(Medecin m, LocalDate date, LocalTime heure);
 	
 	List<RendezVous> findByPatient(Patient p);
+	
+	List<RendezVous> findByMedecin(Medecin m);
 	
 	RendezVous findByDateAndHeure(LocalDate date, LocalTime heure);
 	

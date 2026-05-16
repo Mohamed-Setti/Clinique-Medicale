@@ -21,7 +21,8 @@ export class Sidebar {
     { label: 'Patients', route: '/patients', icon: 'patient' },
     { label: 'Médecins', route: '/medecins', icon: 'medecin' },
     { label: 'Consultations', route: '/consultations', icon: 'consultation' },
-    { label: 'Rendez-vous', route: '/rendezvous', icon: 'rendezvous' },
+    // { label: 'Rendez-vous', route: '/rendezvous', icon: 'rendezvous' },
+    { label: 'Calendrier', route: '/rendezvous/calendar', icon: 'calendar' },
   ];
 
   toggle() {

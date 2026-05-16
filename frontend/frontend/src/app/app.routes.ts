@@ -63,8 +63,24 @@ export const routes: Routes = [
       import('./features/rendezvous/pages/rendezvous-list/rendezvous-list').then(m => m.RendezVousList),
   },
   {
+    path: 'rendezvous/new',
+    loadComponent: () =>
+      import('./features/rendezvous/pages/rendezvous-form/rendezvous-form').then(m => m.RendezvousForm),
+  },
+  {
+    path: 'rendezvous/calendar',
+    loadComponent: () =>
+      import('./features/rendezvous/pages/rendezvous-calendar/rendezvous-calendar').then(m => m.RendezVousCalendar),
+  },
+  {
     path: 'rendezvous/:id',
     loadComponent: () =>
       import('./features/rendezvous/pages/rendezvous-details/rendezvous-details').then(m => m.RendezVousDetails),
   },
+  {
+    path: 'rendezvous/:id/edit',
+    loadComponent: () =>
+      import('./features/rendezvous/pages/rendezvous-form/rendezvous-form').then(m => m.RendezvousForm),
+  },
+
 ];

@@ -1,1 +1,72 @@
-<p>rendezvous-form works!</p>
+<div class="page-header">
+    <div>
+        <h1 class="page-title">{{ isEdit() ? 'Modifier le rendezvous' : 'Nouveau rendezvous' }}</h1>
+        <p class="page-subtitle">{{ isEdit() ? 'Mettre à jour le dossier rendezvous' : 'Ajouter un nouveau rendezvous au
+            système'
+            }}</p>
+    </div>
+    <a routerLink="/rendezvous/calendar" class="btn btn-outline">← Retour</a>
+</div>
+
+@if (error()) {
+<div class="alert-error">{{ error() }}</div>
+}
+
+@if (loading()) {
+<div class="loading-state">
+    <div class="spinner"></div><span>Chargement…</span>
+</div>
+} @else {
+<div class="card form-card">
+    <div class="form-section">
+        <h3 class="section-title">Informations personnelles</h3>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Date <span class="required">*</span></label>
+                <input type="date" [value]="form().date" (input)="updateField('date', $any($event.target).value)" />
+            </div>
+            <div class="form-group">
+                <label>Heure <span class="required">*</span></label>
+                <input type="time" [value]="form().heure" (input)="updateField('heure', $any($event.target).value)" />
+            </div>
+            <div class="form-group">
+                <label>Motif <span class="required">*</span></label>
+                <input type="text" placeholder="ex: Consultation" [value]="form().motif"
+                    (input)="updateField('motif', $any($event.target).value)" />
+            </div>
+            <div class="form-group">
+                <label>Statut <span class="required">*</span></label>
+
+                <select [value]="form().statut" (change)="updateField('statut', $any($event.target).value)">
+                    <option value="">-- Sélectionner un statut --</option>
+
+                    @for (statut of statuts; track statut) {
+                    <option [value]="statut">
+                        {{ statut }}
+                    </option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Patient <span class="required">*</span></label>
+                <input type="number" placeholder="ex: 1" [value]="form().idPatient"
+                    (input)="updateField('idPatient', $any($event.target).value)" />
+            </div>
+            <div class="form-group">
+                <label>Médecin <span class="required">*</span></label>
+                <input type="number" placeholder="ex: 1" [value]="form().idMedecin"
+                    (input)="updateField('idMedecin', $any($event.target).value)" />
+            </div>
+
+        </div>
+    </div>
+
+    <div class="form-footer">
+        <a routerLink="/rendezvous/calendar" class="btn btn-outline">Annuler</a>
+        <button class="btn btn-primary" (click)="submit()" [disabled]="saving()">
+            @if (saving()) { <div class="spinner-sm"></div> }
+            {{ saving() ? 'Sauvegarde…' : (isEdit() ? 'Mettre à jour' : 'Créer le rendezvous') }}
+        </button>
+    </div>
+</div>
+}

@@ -5,7 +5,16 @@ export interface RendezVous {
     date: string;
     heure: string;
     motif: string;
-    statue: RendezVousStatut;
+    statut: RendezVousStatut;
+    idPatient: number;
+    idMedecin: number;
+}
+export interface RendezVousDTO {
+    idRendezVous: number;
+    date: string;
+    heure: string;
+    motif: string;
+    statut: RendezVousStatut;
     idPatient: number;
     idMedecin: number;
 }

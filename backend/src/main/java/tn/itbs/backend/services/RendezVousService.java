@@ -35,6 +35,22 @@ public class RendezVousService {
 		return rvr.findAll();
 	}
 	
+	public List<RendezVous> getAllbyPatient(int idPatient){
+		Patient p = pr.findById(idPatient)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient non trouvé"));
+		return rvr.findByPatient(p);
+	}
+	
+	public List<RendezVous> getAllbyMedecin(int idMedecin){
+		Medecin m = mr.findById(idMedecin)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Medecin non trouvé"));
+		return rvr.findByMedecin(m);
+	}
+	public RendezVous trouverRendezVousparId(int idRenndezVous) {
+		return rvr.findById(idRenndezVous)
+	             .orElseThrow(() -> new RuntimeException("Rendez-Vous not found with id: " + idRenndezVous));
+	}
+	
 	public List<RendezVous> trouverRondezVousparDate(LocalDate date){
 		return rvr.findByDate(date);
 	}
@@ -64,7 +80,7 @@ public class RendezVousService {
 	}
 		
 	public List<RendezVous> trouverRondezVousparStatue(String statue){
-		return rvr.findByStatue(statue);
+		return rvr.findByStatut(statue);
 	}
 	
 	public void ajouterRendezVous (RendezVousDTO rvDto) {
@@ -78,7 +94,7 @@ public class RendezVousService {
 	        rv.setDate(rvDto.getDate());
 	        rv.setHeure(rvDto.getHeure());
 	        rv.setMotif(rvDto.getMotif());
-	        rv.setStatue(rvDto.getStatue());
+	        rv.setStatut(rvDto.getStatut());
 	        rv.setMedecin(m);
 	        rv.setPatient(p);
 
@@ -102,7 +118,7 @@ public class RendezVousService {
         rv.setDate(rvDto.getDate());
         rv.setHeure(rvDto.getHeure());
         rv.setMotif(rvDto.getMotif());
-        rv.setStatue(rvDto.getStatue());
+        rv.setStatut(rvDto.getStatut());
         rv.setMedecin(m);
         rv.setPatient(p);
 

@@ -19,12 +19,18 @@ public class MedecinService {
 	public List<Medecin> getAll(){
 		return mr.findAll();
 	}
+	
+	public Medecin trouverMedecinparId (int idMedecin) {
+		return mr.findById(idMedecin)
+	             .orElseThrow(() -> new RuntimeException("Patient not found with id: " + idMedecin));
+	}
+	
 	public List<Medecin> trouverMedcinparSpecalite(String specialite){
 		return mr.findBySpecialite(specialite);
 	}
 	
-	public List<Medecin> trouverMedcinparDisponibilite(Boolean disponibilite){
-		return mr.findByDisponibilite(disponibilite);
+	public List<Medecin> trouverMedcinparDisponibilite(){
+		return mr.findByDisponibilite(true);
 	}
 	
 	public void ajouterMedecin(Medecin mDto) {

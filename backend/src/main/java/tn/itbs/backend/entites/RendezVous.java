@@ -43,5 +43,5 @@ public class RendezVous {
     private String motif;
 
     @Column(nullable = false)
-    private RendezVousStatut statue;
+    private RendezVousStatut statut;
 }

@@ -9,7 +9,7 @@ export interface CreateRendezVousDto {
   date: string;
   heure: string;
   motif: string;
-  statue: RendezVousStatut;
+  statut: RendezVousStatut;
   idPatient: number;
   idMedecin: number;
 }
@@ -17,28 +17,32 @@ export interface CreateRendezVousDto {
 export interface RendezVousFilter {
   date?: string;
   idMedecin?: number;
-  statue?: RendezVousStatut;
+  statut?: RendezVousStatut;
   idPatient?: number;
 }
 
 @Injectable({ providedIn: 'root' })
 export class RendezVousService {
   private http = inject(HttpClient);
-  private url = `${API_BASE_URL}/rendezvous`;
+  private url = `${API_BASE_URL}/RendezVous`;
 
-  getAll(filters?: RendezVousFilter): Observable<RendezVous[]> {
-    let params = new HttpParams();
-    if (filters) {
-      if (filters.date)      params = params.set('date', filters.date);
-      if (filters.idMedecin) params = params.set('idMedecin', filters.idMedecin);
-      if (filters.statue)    params = params.set('statue', filters.statue);
-      if (filters.idPatient) params = params.set('idPatient', filters.idPatient);
-    }
-    return this.http.get<RendezVous[]>(this.url, { params });
+  // getAll(filters?: RendezVousFilter): Observable<RendezVous[]> {
+  //   let params = new HttpParams();
+  //   if (filters) {
+  //     if (filters.date) params = params.set('date', filters.date);
+  //     if (filters.idMedecin) params = params.set('idMedecin', filters.idMedecin);
+  //     if (filters.statut) params = params.set('statut', filters.statut);
+  //     if (filters.idPatient) params = params.set('idPatient', filters.idPatient);
+  //   }
+  //   return this.http.get<RendezVous[]>(this.url + "/All", { params });
+  // }
+
+  getAll(): Observable<RendezVous[]> {
+    return this.http.get<RendezVous[]>(this.url + "/All");
   }
 
   getById(id: number): Observable<RendezVous> {
-    return this.http.get<RendezVous>(`${this.url}/${id}`);
+    return this.http.get<RendezVous>(`${this.url}/id/${id}`);
   }
 
   getByPatient(idPatient: number): Observable<RendezVous[]> {
@@ -50,11 +54,11 @@ export class RendezVousService {
   }
 
   create(dto: CreateRendezVousDto): Observable<RendezVous> {
-    return this.http.post<RendezVous>(this.url, dto);
+    return this.http.post<RendezVous>(this.url + "/Add", dto);
   }
 
   update(id: number, dto: Partial<CreateRendezVousDto>): Observable<RendezVous> {
-    return this.http.put<RendezVous>(`${this.url}/${id}`, dto);
+    return this.http.put<RendezVous>(`${this.url}/Update/${id}`, dto);
   }
 
   updateStatut(id: number, statue: RendezVousStatut): Observable<RendezVous> {
