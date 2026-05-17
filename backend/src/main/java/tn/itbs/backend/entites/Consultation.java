@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +22,8 @@ public class Consultation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idConsultation;
 
-    @OneToOne(mappedBy = "consultation")
+    @OneToOne
+    @JoinColumn(name = "rendezvous_id", nullable = false)
     private RendezVous rendezVous;
 
     @Column(nullable = false)

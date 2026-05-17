@@ -1,9 +1,14 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr, 'fr-FR');
+
 import { RendezVousService } from '../../services/rendezvous.service';
 import { PatientService } from '../../../patients/services/patient.service';
 import { MedecinService } from '../../../medecins/services/medecin.service';
+import { ConsultationService } from '../../../consultation/services/consultation.service';
 import { RendezVous } from '../../models/rendezvous';
 
 @Component({
@@ -27,6 +32,9 @@ export class RendezVousDetails implements OnInit {
     error = signal('');
     showDeleteConfirm = signal(false);
 
+    private consultationService = inject(ConsultationService);
+    consultationId = signal<number | null>(null);
+
     ngOnInit() {
         const id = this.route.snapshot.paramMap.get('id');
         if (id) {
@@ -36,6 +44,8 @@ export class RendezVousDetails implements OnInit {
                     this.loading.set(false);
                     this.loadPatientName(rv.idPatient);
                     this.loadMedecinName(rv.idMedecin);
+                    this.loadConsultationId(rv.idRendezVous);
+
                 },
                 error: () => {
                     this.error.set('Rendez-vous introuvable.');
@@ -43,6 +53,23 @@ export class RendezVousDetails implements OnInit {
                 }
             });
         }
+    }
+
+    hasConsultation() {
+        return this.consultationId() !== null;
+    }
+
+    loadConsultationId(id: number) {
+        console.log("idRendezVous " + this.rendezvous()?.idRendezVous);
+        console.log("id " + id);
+        this.consultationService.getByRendezVousId(id).subscribe({
+            next: c => {
+                this.consultationId.set(c?.idConsultation ?? null);
+                console.log("c.idConsultation " + c.idConsultation);
+            },
+            error: () => this.consultationId.set(null),
+        });
+
     }
 
     loadPatientName(id: number) {

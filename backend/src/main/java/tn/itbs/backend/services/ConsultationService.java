@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import tn.itbs.backend.Dto.ConsultationDTO;
-import tn.itbs.backend.Mapper.ConsultationMapper;
 import tn.itbs.backend.entites.Consultation;
 import tn.itbs.backend.entites.RendezVous;
 import tn.itbs.backend.repository.ConsultationRepository;
@@ -23,16 +22,34 @@ public class ConsultationService {
 	@Autowired
 	private RendezVousRepository rvr ;
 	
-	@Autowired
-	private ConsultationMapper cm ;
 	
-	public List<ConsultationDTO> getAll (){
-		return cm.toDTOList(cr.findAll());
+	public List<Consultation> getAll (){
+		return cr.findAll();
+	}
+	
+	public Consultation getbyRendezVousId(int idRendezvous){
+	    RendezVous rv = rvr.findById(idRendezvous)
+	        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Rendez-Vous non trouvé"));
+	    Consultation consultation = cr.findByRendezVous(rv);
+	    if (consultation == null) {
+	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Consultation non trouvée pour ce rendez-vous");
+	    }
+	    return consultation;
 	}
 	
 	
+	
+	
 	public void ajouterConsultation(ConsultationDTO cDto) {
-		cr.save(cm.fromDTO(cDto));
+		RendezVous rv = rvr.findById(cDto.getIdRendezVous())
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Rendez-Vous non trouvé"));
+		
+		Consultation c = new Consultation();
+		c.setDiagnostic(cDto.getDiagnostic());
+		c.setOrdonnance(cDto.getOrdonnance());
+		c.setPrix(cDto.getPrix());
+		c.setRendezVous(rv);
+		cr.save(c);
 	}
 	
 	public void supprimerConsultation(int idConsultation) {
@@ -53,6 +70,12 @@ public class ConsultationService {
         cr.save(c);
     
 		return ResponseEntity.ok("Consultation mis à jour avec succès");
+	}
+
+	public Consultation trouverConsultationparId(int idConsultation) {
+		// TODO Auto-generated method stub
+		return cr.findById(idConsultation)
+				.orElseThrow(() -> new RuntimeException("Consultation not found with id: " + idConsultation));
 	}
 	
 }

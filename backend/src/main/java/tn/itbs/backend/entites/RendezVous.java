@@ -29,8 +29,7 @@ public class RendezVous {
     @JoinColumn(name = "idMedecin")
     private Medecin medecin;
 
-    @OneToOne
-    @JoinColumn(name = "idConsultation")
+    @OneToOne(mappedBy = "rendezVous")
     private Consultation consultation;
 
     @Column(nullable = false)

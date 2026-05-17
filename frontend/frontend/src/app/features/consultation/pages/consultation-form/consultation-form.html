@@ -1,2 +1,97 @@
-<div class="page-header"><h1 class="page-title">Nouvelle consultation</h1><a routerLink="/consultations" class="btn btn-outline">← Retour</a></div>
-<div class="card"><p style="color:#6b7a99;font-size:.875rem">Formulaire consultation à implémenter.</p></div>
+<div class="page-header">
+    <div>
+        <h1 class="page-title">
+            {{ isEdit() ? 'Modifier la consultation' : 'Nouvelle consultation' }}
+        </h1>
+        <p class="page-subtitle">
+            {{ isEdit()
+            ? 'Mettre à jour la fiche consultation'
+            : 'Ajouter une nouvelle consultation pour un rendez-vous'
+            }}
+        </p>
+    </div>
+    <a routerLink="/rendezvous/calendar" class="btn btn-outline">← Retour</a>
+</div>
+
+@if (error()) {
+<div class="alert-error">{{ error() }}</div>
+}
+
+@if (loading()) {
+<div class="loading-state">
+    <div class="spinner"></div><span>Chargement…</span>
+</div>
+} @else {
+<div class="card form-card">
+
+    <!-- Diagnostic -->
+    <div class="form-section">
+        <h3 class="section-title">Diagnostic<span class="required">*</span></h3>
+        <div class="form-group">
+            <textarea rows="5" placeholder="Décrivez le diagnostic médical en détail…" [value]="form().diagnostic"
+                (input)="updateField('diagnostic', $any($event.target).value)"></textarea>
+        </div>
+    </div>
+
+    <!-- Ordonnance -->
+    <div class="form-section">
+        <h3 class="section-title">Ordonnance</h3>
+        <div class="ordonnance-table-wrapper">
+            <table class="ordonnance-table">
+                <thead>
+                    <tr>
+                        <th>Médicament</th>
+                        <th>Dose</th>
+                        <th>Fréquence</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (ligne of ordonnanceLines(); track $index) {
+                    <tr>
+                        <td>
+                            <input type="text" placeholder="ex: Amoxicilline" [value]="ligne.medicament"
+                                (input)="updateLigne($index, 'medicament', $any($event.target).value)" />
+                        </td>
+                        <td>
+                            <input type="text" placeholder="ex: 500mg" [value]="ligne.dose"
+                                (input)="updateLigne($index, 'dose', $any($event.target).value)" />
+                        </td>
+                        <td>
+                            <input type="text" placeholder="ex: 3x/jour pendant 7 jours" [value]="ligne.frequence"
+                                (input)="updateLigne($index, 'frequence', $any($event.target).value)" />
+                        </td>
+                        <td>
+                            <button class="btn-remove" (click)="removeLigne($index)" title="Supprimer">
+                                ✕
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <button class="btn btn-outline add-ligne-btn" (click)="addLigne()">
+                + Ajouter un médicament
+            </button>
+        </div>
+    </div>
+
+    <!-- Prix -->
+    <div class="form-section">
+        <h3 class="section-title">Tarification</h3>
+        <div class="form-group" style="max-width: 200px;">
+            <label>Prix (DT) <span class="required">*</span></label>
+            <input type="number" min="0" placeholder="30" [value]="form().prix"
+                (input)="updateField('prix', $any($event.target).value)" />
+        </div>
+    </div>
+
+    <div class="form-footer">
+        <a routerLink="/consultations" class="btn btn-outline">Annuler</a>
+        <button class="btn btn-primary" (click)="submit()" [disabled]="saving()">
+            @if (saving()) { <div class="spinner-sm"></div> }
+            {{ saving() ? 'Sauvegarde…' : (isEdit() ? 'Mettre à jour' : 'Créer la consultation') }}
+        </button>
+    </div>
+</div>
+}

@@ -2,12 +2,21 @@
     <div>
         <h1 class="page-title">Détail du rendez-vous</h1>
         <p class="page-subtitle">Informations détaillées</p>
-    </div>
-    <div style="display:flex;gap:10px">
-        <a routerLink="/rendezvous/calendar" class="btn btn-outline">← Retour</a>
-        @if (rendezvous()) {
-        <button class="btn btn-danger" (click)="showDeleteConfirm.set(true)">Supprimer</button>
-        }
+        <div style="display:flex;gap:10px">
+            <a routerLink="/rendezvous/calendar" class="btn btn-outline">← Retour</a>
+            @if (hasConsultation()) {
+            <a [routerLink]="['/consultations', consultationId()]" class="btn btn-primary">
+                Voir la consultation
+            </a>
+            } @else {
+            <a [routerLink]="['/consultations/new', rendezvous()?.idRendezVous]" class="btn btn-primary">
+                Créer une consultation
+            </a>
+            }
+            @if (rendezvous()) {
+            <button class="btn btn-danger" (click)="showDeleteConfirm.set(true)">Supprimer</button>
+            }
+        </div>
     </div>
 </div>
 

@@ -48,7 +48,7 @@ export const routes: Routes = [
       import('./features/consultation/pages/consultation-list/consultation-list').then(m => m.ConsultationList),
   },
   {
-    path: 'consultations/new',
+    path: 'consultations/new/:idRendezVous',
     loadComponent: () =>
       import('./features/consultation/pages/consultation-form/consultation-form').then(m => m.ConsultationForm),
   },

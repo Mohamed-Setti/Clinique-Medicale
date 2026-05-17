@@ -1,2 +1,70 @@
-<div class="page-header"><h1 class="page-title">Détails consultation</h1><a routerLink="/consultations" class="btn btn-outline">← Retour</a></div>
-<div class="card"><p style="color:#6b7a99;font-size:.875rem">Détails de la consultation à implémenter.</p></div>
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Détail de la consultation</h1>
+        <p class="page-subtitle">Informations détaillées</p>
+    </div>
+    <div style="display:flex;gap:10px">
+        <a routerLink="/consultations" class="btn btn-outline">← Retour</a>
+        @if (consultation()) {
+        <button class="btn btn-danger" (click)="showDeleteConfirm.set(true)">Supprimer</button>
+        }
+    </div>
+</div>
+
+@if (error()) {
+<div class="alert-error">{{ error() }}</div>
+}
+
+@if (loading()) {
+<div class="loading-state">
+    <div class="spinner"></div>
+    <span>Chargement…</span>
+</div>
+}
+
+@if (consultation(); as c) {
+<div class="card detail-card">
+    <div class="rv-header">
+        <div class="avatar-lg">#{{ c.idConsultation }}</div>
+        <h2 class="rv-title">
+            Consultation du {{ rendezVousDate() | date:'dd/MM/yyyy' }}
+        </h2>
+    </div>
+
+    <div class="detail-grid">
+        <div class="detail-item">
+            <span class="detail-label">Patient</span>
+            <span class="detail-value">{{ patientName() }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Médecin</span>
+            <span class="detail-value">{{ medecinName() }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Diagnostic</span>
+            <span class="detail-value">{{ c.diagnostic }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Ordonnance</span>
+            <span class="detail-value">{{ c.ordonnance }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Prix</span>
+            <span class="detail-value">{{ c.prix }} DT</span>
+        </div>
+    </div>
+</div>
+}
+
+@if (showDeleteConfirm()) {
+<div class="modal-overlay" (click)="showDeleteConfirm.set(false)">
+    <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Supprimer cette consultation ?</h3>
+        <p>Cette action est irréversible.</p>
+        <div class="modal-actions">
+            <button class="btn btn-outline" (click)="showDeleteConfirm.set(false)">Annuler</button>
+            <button class="btn btn-danger" (click)="delete()">Supprimer</button>
+        </div>
+    </div>
+</div>
+}

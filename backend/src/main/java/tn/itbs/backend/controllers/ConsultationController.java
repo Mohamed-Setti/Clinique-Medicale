@@ -14,33 +14,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.itbs.backend.Dto.ConsultationDTO;
+import tn.itbs.backend.Mapper.ConsultationMapper;
 import tn.itbs.backend.services.ConsultationService;
+
 
 @RestController
 @RequestMapping("/Consultation")
 public class ConsultationController {
 
     @Autowired
-    private ConsultationService consultationService;
+    private ConsultationService cs;
 
-    @GetMapping("/getAll")
+    @Autowired
+    private ConsultationMapper cm ;
+    
+    @GetMapping("/All")
     public List<ConsultationDTO> getAll() {
-        return consultationService.getAll();
+        return  cm.toDTOList( cs.getAll());
+    }
+    
+    @GetMapping("/id/{idConsultation}")
+	public ConsultationDTO trouverConsultationparId(@PathVariable int idConsultation) {
+		return cm.toDTO(cs.trouverConsultationparId(idConsultation));
+	}
+    
+    
+    @GetMapping("/getByRendezVous/{idRendezVous}")
+    public ResponseEntity<ConsultationDTO> getbyRendezVousId(@PathVariable int idRendezVous) {
+        var consultation = cs.getbyRendezVousId(idRendezVous);
+        if (consultation == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(cm.toDTO(consultation));
     }
 
     @PostMapping("/Add")
     public void ajouterConsultation(@RequestBody ConsultationDTO consultationDto) {
-        consultationService.ajouterConsultation(consultationDto);
+        cs.ajouterConsultation(consultationDto);
     }
 
     @PutMapping("/Update/{id}")
     public ResponseEntity<String> miseajourConsultation(@PathVariable("id") int idConsultation,
                                @RequestBody ConsultationDTO consultation) {
-        return consultationService.miseajourConsultation(idConsultation, consultation);
+        return cs.miseajourConsultation(idConsultation, consultation);
     }
 
     @DeleteMapping("/Delete/{id}")
     public void supprimerConsultation(@PathVariable("id") int idConsultation) {
-        consultationService.supprimerConsultation(idConsultation);
+        cs.supprimerConsultation(idConsultation);
     }
 }

@@ -4,15 +4,13 @@ export interface Consultation {
   ordonnance: string;
   prix: number;
   dateConsultation?: string;
-  idPatient: number;
-  idMedecin: number;
+  idRendezVous: number;
 }
 
-export interface CreateConsultationDto {
+export interface ConsultationDTO {
+  idConsultation: number;
   diagnostic: string;
   ordonnance: string;
   prix: number;
-  dateConsultation?: string;
-  idPatient: number;
-  idMedecin: number;
+  idRendezVous: number;
 }

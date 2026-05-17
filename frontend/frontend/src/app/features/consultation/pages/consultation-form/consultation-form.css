@@ -1,0 +1,179 @@
+textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: #1a2540;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.6;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+textarea:focus {
+    border-color: #0f6fba;
+}
+
+.ordonnance-table-wrapper {
+    overflow-x: auto;
+}
+
+.ordonnance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+.ordonnance-table thead th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7a99;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: #f8fafc;
+    border-bottom: 1px solid #e8edf4;
+}
+
+.ordonnance-table tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.ordonnance-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.ordonnance-table td {
+    padding: 8px 10px;
+    vertical-align: middle;
+}
+
+.ordonnance-table input {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    color: #1a2540;
+    outline: none;
+}
+
+.ordonnance-table input:focus {
+    border-color: #0f6fba;
+}
+
+.btn-remove {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #fecaca;
+    background: #fee2e2;
+    color: #dc2626;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-remove:hover {
+    background: #fca5a5;
+}
+
+.add-ligne-btn {
+    margin-top: 6px;
+    font-size: 0.875rem;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: #1a2540;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.6;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+textarea:focus {
+    border-color: #0f6fba;
+}
+
+.ordonnance-table-wrapper {
+    overflow-x: auto;
+}
+
+.ordonnance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+.ordonnance-table thead th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7a99;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: #f8fafc;
+    border-bottom: 1px solid #e8edf4;
+}
+
+.ordonnance-table tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.ordonnance-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.ordonnance-table td {
+    padding: 8px 10px;
+    vertical-align: middle;
+}
+
+.ordonnance-table input {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    color: #1a2540;
+    outline: none;
+}
+
+.ordonnance-table input:focus {
+    border-color: #0f6fba;
+}
+
+.btn-remove {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #fecaca;
+    background: #fee2e2;
+    color: #dc2626;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-remove:hover {
+    background: #fca5a5;
+}
+
+.add-ligne-btn {
+    margin-top: 6px;
+    font-size: 0.875rem;
+}

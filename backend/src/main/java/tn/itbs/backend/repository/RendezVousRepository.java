@@ -16,6 +16,7 @@ import java.time.LocalTime;
 @Repository
 public interface RendezVousRepository extends JpaRepository<RendezVous, Integer>{
 	
+	RendezVous findByIdRendezVous(int idRendezVous);
 	
 	List<RendezVous> findByDate(LocalDate date);
 	
