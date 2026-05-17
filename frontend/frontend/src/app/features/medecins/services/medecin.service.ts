@@ -24,7 +24,7 @@ export class MedecinService {
   }
 
   getDisponibles(): Observable<Medecin[]> {
-    return this.http.get<Medecin[]>(`${this.url}/Disponibilite`);
+    return this.http.get<Medecin[]>(`${this.url}/Disponibilite/true`);
   }
 
   create(dto: CreateMedecinDto): Observable<Medecin> {
@@ -32,7 +32,7 @@ export class MedecinService {
   }
 
   update(id: number, dto: Partial<CreateMedecinDto>): Observable<Medecin> {
-    return this.http.put<Medecin>(`${this.url}/update/${id}`, dto);
+    return this.http.put<Medecin>(`${this.url}/Update/${id}`, dto);
   }
 
   delete(id: number): Observable<void> {

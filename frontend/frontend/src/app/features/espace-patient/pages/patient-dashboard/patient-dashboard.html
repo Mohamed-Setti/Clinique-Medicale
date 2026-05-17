@@ -1,0 +1,200 @@
+<div class="dashboard-page">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="page-icon patient-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="page-title">Espace Patient</h1>
+        <p class="page-subtitle">Prenez un rendez-vous et suivez vos consultations</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alerts -->
+  @if (error()) {
+  <div class="alert alert-error">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    {{ error() }}
+  </div>
+  }
+  @if (successMsg()) {
+  <div class="alert alert-success">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+    {{ successMsg() }}
+  </div>
+  }
+
+  <!-- Sélecteur Patient -->
+  <div class="card selector-card">
+    <div class="card-body">
+      <label class="select-label">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Sélectionner un patient
+      </label>
+      <select class="profile-select" (change)="onPatientChange($any($event.target).value)">
+        <option value="">-- Choisir un patient --</option>
+        @for (p of patients(); track p.idPatient) {
+        <option [value]="p.idPatient">{{ p.nom }} — {{ p.numTel }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  @if (selectedPatient(); as patient) {
+
+  <!-- Patient Info Banner -->
+  <div class="card patient-banner">
+    <div class="card-body banner-body">
+      <div class="patient-avatar">{{ patient.nom.charAt(0) }}</div>
+      <div class="patient-info">
+        <h2 class="patient-name">{{ patient.nom }}</h2>
+        <div class="patient-meta">
+          <span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            {{ patient.numTel }}
+          </span>
+          <span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Né(e) le {{ patient.dateDeNaissance | date:'dd/MM/yyyy' }}
+          </span>
+        </div>
+      </div>
+      <button class="btn btn-primary" (click)="showForm.set(true)" [disabled]="showForm()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Prendre un rendez-vous
+      </button>
+    </div>
+  </div>
+
+  <!-- Nouveau RDV Form -->
+  @if (showForm()) {
+  <div class="card form-card">
+    <div class="card-header">
+      <div class="form-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Nouveau Rendez-vous
+      </div>
+      <button class="close-btn" (click)="cancelForm()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="card-body form-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Date <span class="required">*</span></label>
+          <input type="date" class="form-control" [value]="newRv().date" (change)="updateNewRv('date', $any($event.target).value)">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Heure <span class="required">*</span></label>
+          <input type="time" class="form-control" [value]="newRv().heure" (change)="updateNewRv('heure', $any($event.target).value)">
+        </div>
+        <div class="form-group full-width">
+          <label class="form-label">Médecin disponible <span class="required">*</span></label>
+          <select class="form-control" [value]="newRv().idMedecin" (change)="updateNewRv('idMedecin', +$any($event.target).value)">
+            <option value="0">-- Choisir un médecin --</option>
+            @for (m of medecinsDispo(); track m.idMedecin) {
+            <option [value]="m.idMedecin">Dr. {{ m.nom }} — {{ m.specialite }}</option>
+            }
+          </select>
+          @if (medecinsDispo().length === 0) {
+          <p class="form-hint warn">Aucun médecin disponible pour le moment.</p>
+          }
+        </div>
+        <div class="form-group full-width">
+          <label class="form-label">Motif <span class="required">*</span></label>
+          <textarea class="form-control" rows="3" placeholder="Décrivez le motif de la consultation…"
+            [value]="newRv().motif" (input)="updateNewRv('motif', $any($event.target).value)"></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-outline" (click)="cancelForm()" [disabled]="saving()">Annuler</button>
+        <button class="btn btn-primary" (click)="submitRv()" [disabled]="saving()">
+          @if (saving()) {
+          <div class="mini-spinner"></div>
+          Enregistrement…
+          } @else {
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+          Confirmer le rendez-vous
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+  }
+
+  <!-- Liste Rendez-vous -->
+  <div class="section-header">
+    <h2 class="section-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Mes Rendez-vous
+    </h2>
+    <span class="rv-count">{{ rendezvous().length }} au total</span>
+  </div>
+
+  @if (loading()) {
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <span>Chargement…</span>
+  </div>
+  } @else {
+
+  <div class="card table-card">
+    @if (rendezvous().length === 0) {
+    <div class="empty-state">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <p>Aucun rendez-vous trouvé</p>
+      <button class="btn btn-primary" (click)="showForm.set(true)">Prendre un rendez-vous</button>
+    </div>
+    } @else {
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Date</th>
+          <th>Heure</th>
+          <th>Médecin</th>
+          <th>Motif</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (rv of rendezvous(); track rv.idRendezVous) {
+        <tr>
+          <td class="id-cell">#{{ rv.idRendezVous }}</td>
+          <td class="date-cell">{{ rv.date | date:'dd/MM/yyyy' }}</td>
+          <td>{{ rv.heure }}</td>
+          <td class="medecin-cell">
+            <div class="mini-avatar-med">Dr</div>
+            Dr. {{ getMedecinName(rv.idMedecin) }}
+          </td>
+          <td class="motif-cell">{{ rv.motif }}</td>
+          <td>
+            <span class="badge" [ngClass]="getStatutClass(rv.statut)">
+              {{ getStatutLabel(rv.statut) }}
+            </span>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    }
+  </div>
+
+  } <!-- end else loading -->
+
+  } <!-- end selectedPatient -->
+
+  @if (!selectedPatient() && patients().length > 0) {
+  <div class="placeholder-state">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <p>Sélectionnez un patient pour accéder à son espace</p>
+  </div>
+  }
+
+</div>

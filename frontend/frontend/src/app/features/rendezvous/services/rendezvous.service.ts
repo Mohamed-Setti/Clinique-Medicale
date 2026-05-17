@@ -46,11 +46,11 @@ export class RendezVousService {
   }
 
   getByPatient(idPatient: number): Observable<RendezVous[]> {
-    return this.http.get<RendezVous[]>(`${this.url}/patient/${idPatient}`);
+    return this.http.get<RendezVous[]>(`${this.url}/Patient/${idPatient}`);
   }
 
   getByMedecin(idMedecin: number): Observable<RendezVous[]> {
-    return this.http.get<RendezVous[]>(`${this.url}/medecin/${idMedecin}`);
+    return this.http.get<RendezVous[]>(`${this.url}/Medecin/${idMedecin}`);
   }
 
   create(dto: CreateRendezVousDto): Observable<RendezVous> {

@@ -23,6 +23,8 @@ export class Sidebar {
     { label: 'Consultations', route: '/consultations', icon: 'consultation' },
     // { label: 'Rendez-vous', route: '/rendezvous', icon: 'rendezvous' },
     { label: 'Calendrier', route: '/rendezvous/calendar', icon: 'calendar' },
+    { label: 'Espace Médecin', route: '/espace-medecin', icon: 'espace-medecin' },
+    { label: 'Espace Patient', route: '/espace-patient', icon: 'espace-patient' },
   ];
 
   toggle() {

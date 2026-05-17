@@ -82,5 +82,15 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/rendezvous/pages/rendezvous-form/rendezvous-form').then(m => m.RendezvousForm),
   },
+  {
+    path: 'espace-medecin',
+    loadComponent: () =>
+      import('./features/espace-medecin/pages/medecin-dashboard/medecin-dashboard').then(m => m.MedecinDashboard),
+  },
+  {
+    path: 'espace-patient',
+    loadComponent: () =>
+      import('./features/espace-patient/pages/patient-dashboard/patient-dashboard').then(m => m.PatientDashboard),
+  },
 
 ];
