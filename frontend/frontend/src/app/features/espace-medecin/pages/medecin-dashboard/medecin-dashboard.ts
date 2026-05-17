@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -36,6 +36,47 @@ export class MedecinDashboard implements OnInit {
   statuts = Object.values(RendezVousStatut);
   updatingStatutId = signal<number | null>(null);
 
+  // ── Calendrier ──
+  weekOffset = signal(0);
+
+  weekDays = computed(() => {
+    const today = new Date();
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - today.getDay() + 1 + this.weekOffset() * 7);
+    return Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(monday);
+      d.setDate(monday.getDate() + i);
+      return d;
+    });
+  });
+
+  weekLabel = computed(() => {
+    const days = this.weekDays();
+    const fmt = (d: Date) => d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
+    return `${fmt(days[0])} – ${fmt(days[6])} ${days[6].getFullYear()}`;
+  });
+
+  getRvForDay(day: Date): RendezVous[] {
+    const dateStr = day.toISOString().split('T')[0];
+    return this.rendezvous()
+      .filter(rv => {
+        const normalized = rv.date?.includes('/')
+          ? rv.date.split('/').reverse().join('-')
+          : rv.date;
+        return normalized?.startsWith(dateStr);
+      })
+      .sort((a, b) => (a.heure ?? '').localeCompare(b.heure ?? ''));
+  }
+
+  isToday(day: Date): boolean {
+    return day.toDateString() === new Date().toDateString();
+  }
+
+  prevWeek() { this.weekOffset.update(w => w - 1); }
+  nextWeek() { this.weekOffset.update(w => w + 1); }
+  goToday() { this.weekOffset.set(0); }
+  // ── Fin Calendrier ──
+
   ngOnInit() {
     this.medecinService.getAll().subscribe({
       next: data => this.medecins.set(data.filter((m): m is Medecin => !!m)),
@@ -49,6 +90,7 @@ export class MedecinDashboard implements OnInit {
     this.selectedMedecinId.set(id);
     this.loading.set(true);
     this.error.set(null);
+    this.weekOffset.set(0);
 
     this.medecinService.getById(id).subscribe({
       next: m => {
@@ -82,7 +124,6 @@ export class MedecinDashboard implements OnInit {
   toggleDisponibilite() {
     const m = this.selectedMedecin();
     if (!m) return;
-
     this.savingDisponibilite.set(true);
     this.error.set(null);
     this.successMsg.set(null);
@@ -95,71 +136,49 @@ export class MedecinDashboard implements OnInit {
       next: () => {
         const updated = { ...m, disponibilite: !m.disponibilite };
         this.selectedMedecin.set(updated);
-        this.medecins.update(list =>
-          list.map(med =>
-            med && med.idMedecin === updated.idMedecin ? updated : med
-          )
-        );
+        this.medecins.update(list => list.map(med =>
+          med?.idMedecin === updated.idMedecin ? updated : med
+        ));
         this.savingDisponibilite.set(false);
-        this.successMsg.set(`Disponibilité mise à jour : ${updated.disponibilite ? 'Disponible' : 'Indisponible'}`);
+        this.successMsg.set(`Disponibilité : ${updated.disponibilite ? 'Disponible' : 'Indisponible'}`);
         setTimeout(() => this.successMsg.set(null), 3000);
       },
-      error: () => {
-        this.error.set('Erreur lors de la mise à jour.');
-        this.savingDisponibilite.set(false);
-      }
+      error: () => { this.error.set('Erreur mise à jour.'); this.savingDisponibilite.set(false); }
     });
   }
 
   changeStatut(rv: RendezVous, statut: RendezVousStatut) {
     this.updatingStatutId.set(rv.idRendezVous);
-
     const dto: RendezVousDTO = {
       idRendezVous: rv.idRendezVous,
-      date: rv.date,
-      heure: rv.heure,
-      motif: rv.motif,
-      statut,
-      idPatient: rv.idPatient,
-      idMedecin: rv.idMedecin
+      date: rv.date, heure: rv.heure, motif: rv.motif,
+      statut, idPatient: rv.idPatient, idMedecin: rv.idMedecin
     };
-
     this.rvService.update(rv.idRendezVous, dto).subscribe({
       next: () => {
         this.rendezvous.update(list =>
-          list.map(r =>
-            r.idRendezVous === rv.idRendezVous ? { ...r, statut } : r
-          )
+          list.map(r => r.idRendezVous === rv.idRendezVous ? { ...r, statut } : r)
         );
         this.updatingStatutId.set(null);
       },
-      error: () => {
-        this.error.set('Erreur changement de statut.');
-        this.updatingStatutId.set(null);
-      }
+      error: () => { this.error.set('Erreur changement de statut.'); this.updatingStatutId.set(null); }
     });
   }
 
-  getPatientName(id: number): string {
-    return this.patientNames().get(id) ?? '...';
-  }
+  getPatientName(id: number): string { return this.patientNames().get(id) ?? '...'; }
 
   getStatutClass(statut: RendezVousStatut): string {
     const map: Record<string, string> = {
-      EN_ATTENTE: 'badge-attente',
-      CONFIRME: 'badge-confirme',
-      ANNULE: 'badge-annule',
-      TERMINE: 'badge-termine',
+      EN_ATTENTE: 'badge-attente', CONFIRME: 'badge-confirme',
+      ANNULE: 'badge-annule', TERMINE: 'badge-termine',
     };
     return map[statut] ?? '';
   }
 
   getStatutLabel(statut: RendezVousStatut): string {
     const map: Record<string, string> = {
-      EN_ATTENTE: 'En attente',
-      CONFIRME: 'Confirmé',
-      ANNULE: 'Annulé',
-      TERMINE: 'Terminé',
+      EN_ATTENTE: 'En attente', CONFIRME: 'Confirmé',
+      ANNULE: 'Annulé', TERMINE: 'Terminé',
     };
     return map[statut] ?? statut;
   }

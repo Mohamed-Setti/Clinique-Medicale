@@ -20,7 +20,6 @@ export class Sidebar {
   navItems: NavItem[] = [
     { label: 'Patients', route: '/patients', icon: 'patient' },
     { label: 'Médecins', route: '/medecins', icon: 'medecin' },
-    { label: 'Consultations', route: '/consultations', icon: 'consultation' },
     // { label: 'Rendez-vous', route: '/rendezvous', icon: 'rendezvous' },
     { label: 'Calendrier', route: '/rendezvous/calendar', icon: 'calendar' },
     { label: 'Espace Médecin', route: '/espace-medecin', icon: 'espace-medecin' },

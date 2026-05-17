@@ -5,6 +5,7 @@ import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { ConsultationService } from '../../services/consultation.service';
 import { RendezVousService } from '../../../rendezvous/services/rendezvous.service';
 import { ConsultationDTO, Consultation } from '../../models/consultation';
+import { FactureService } from '../../../../core/services/facture.service';
 
 export interface OrdonnanceLigne {
     medicament: string;
@@ -24,6 +25,7 @@ export class ConsultationForm implements OnInit {
     private rendezVousService = inject(RendezVousService);
     private router = inject(Router);
     private route = inject(ActivatedRoute);
+    private factureService = inject(FactureService);
 
     consultationId = signal<number | null>(null);
     isEdit = signal(false);
@@ -46,7 +48,6 @@ export class ConsultationForm implements OnInit {
     ngOnInit() {
         const id = this.route.snapshot.paramMap.get('id');
         const idRendezVous = this.route.snapshot.paramMap.get('idRendezVous');
-
 
         if (idRendezVous && !isNaN(+idRendezVous)) {
             this.form.update(f => ({ ...f, idRendezVous: +idRendezVous }));
@@ -77,7 +78,6 @@ export class ConsultationForm implements OnInit {
         }
     }
 
-    // Ordonnance lines management
     addLigne() {
         this.ordonnanceLines.update(lines => [
             ...lines,
@@ -95,7 +95,6 @@ export class ConsultationForm implements OnInit {
         );
     }
 
-    // Convert lines to a string to store in backend
     buildOrdonnanceString(): string {
         return this.ordonnanceLines()
             .filter(l => l.medicament.trim())
@@ -103,7 +102,6 @@ export class ConsultationForm implements OnInit {
             .join('\n');
     }
 
-    // Parse stored string back to lines when editing
     parseOrdonnance(raw: string): OrdonnanceLigne[] {
         if (!raw) return [{ medicament: '', dose: '', frequence: '' }];
         return raw.split('\n').map(line => {
@@ -143,7 +141,21 @@ export class ConsultationForm implements OnInit {
             : this.consultationService.create(dto);
 
         obs.subscribe({
-            next: () => this.router.navigate(['/consultations/details/' + this.consultationId()]),
+            next: (created) => {
+                if (!this.isEdit()) {
+                    // ✅ Le backend retourne void → on utilise dto directement
+                    // On récupère l'id via getByRendezVous après création
+                    this.consultationService.getByRendezVousId(dto.idRendezVous).subscribe({
+                        next: (consultation) => {
+                            this.factureService.genererFacture(consultation);
+                        },
+                        error: () => {
+                            // Facture échouée mais on navigue quand même
+                        }
+                    });
+                }
+                this.router.navigate(['/rendezvous/calendar']);
+            },
             error: () => {
                 this.error.set('Erreur lors de la sauvegarde.');
                 this.saving.set(false);

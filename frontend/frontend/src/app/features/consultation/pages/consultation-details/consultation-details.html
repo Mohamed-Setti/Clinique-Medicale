@@ -4,7 +4,7 @@
         <p class="page-subtitle">Informations détaillées</p>
     </div>
     <div style="display:flex;gap:10px">
-        <a routerLink="/consultations" class="btn btn-outline">← Retour</a>
+        <a routerLink="/rendezvous/calendar" class="btn btn-outline">← Retour</a>
         @if (consultation()) {
         <button class="btn btn-danger" (click)="showDeleteConfirm.set(true)">Supprimer</button>
         }
