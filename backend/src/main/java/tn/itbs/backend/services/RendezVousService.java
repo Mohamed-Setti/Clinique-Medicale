@@ -59,6 +59,10 @@ public class RendezVousService {
 		return rvr.findByHeure(heure);
 	}
 	
+	public List<RendezVous> trouverRondezVousparMedecin(Medecin m){
+		return rvr.findByMedecin(m);
+	}
+	
 	public RendezVous trouverRendezVousparDateetHeure(LocalDate date, LocalTime heure) {
 		return rvr.findByDateAndHeure(date, heure);
 	}

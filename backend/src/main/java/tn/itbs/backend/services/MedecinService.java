@@ -54,11 +54,13 @@ public class MedecinService {
 					m.setNom(M.getNom());
 					m.setSpecialite(M.getSpecialite());
 					m.setDisponibilite(M.getDisponibilite());
+					mr.save(m);
 				}
 				, 
 				()-> {
 					throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Medecin non trouvé");
 				});
+		
 		return ResponseEntity.ok("Medecin mis à jour avec succès");
 	}
 }

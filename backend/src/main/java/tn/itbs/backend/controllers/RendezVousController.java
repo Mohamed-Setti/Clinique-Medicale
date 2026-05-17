@@ -34,12 +34,12 @@ public class RendezVousController {
 	
 	
 	
-	@PutMapping("/Update/{id}")
+	@PutMapping("/Update/{idRendezVous}")
 	public ResponseEntity<String> miseajourRendezVous(@PathVariable int idRendezVous,@RequestBody RendezVousDTO rvDto) {
 		return rvs.miseajourRendezVous(idRendezVous,rvDto);
 	}
 	
-	@DeleteMapping("/Delete/{id}")
+	@DeleteMapping("/Delete/{idRendezVous}")
 	public void supprimerRendezVous(@PathVariable int idRendezVous) {
 		rvs.supprimerRendezVous(idRendezVous);
 	}
@@ -53,6 +53,16 @@ public class RendezVousController {
 	@GetMapping("/id/{idRendezVous}")
 	public RendezVousDTO trouverRendezVousparId(@PathVariable int idRendezVous) {
 		return rvm.toDTO(rvs.trouverRendezVousparId(idRendezVous));
+	}
+	
+	@GetMapping("/Medecin/{idMedecin}")
+	public List<RendezVousDTO> trouverRendezVousparMedecin(@PathVariable int idMedecin) {
+		return rvm.toDTOList(rvs.getAllbyMedecin(idMedecin));
+	}
+	
+	@GetMapping("/Patient/{idPatient}")
+	public List<RendezVousDTO> trouverRendezVousparpatient(@PathVariable int idPatient) {
+		return rvm.toDTOList(rvs.getAllbyPatient(idPatient));
 	}
 	
 	@GetMapping("/betweenDates")
